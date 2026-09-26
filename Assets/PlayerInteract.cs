@@ -17,7 +17,7 @@ public class PlayerInteract : MonoBehaviour
                 DoorInteract door = hit.collider.GetComponentInParent<DoorInteract>();
                 if (door != null)
                 {
-                    door.ToggleDoor();
+                    //door.ToggleDoor();
                 }
             }
         }
