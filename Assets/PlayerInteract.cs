@@ -14,7 +14,7 @@ public class PlayerInteract : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, interactDistance))
             {
-                DoorInteract door = hit.collider.GetComponent<DoorInteract>();
+                DoorInteract door = hit.collider.GetComponentInParent<DoorInteract>();
                 if (door != null)
                 {
                     door.ToggleDoor();
