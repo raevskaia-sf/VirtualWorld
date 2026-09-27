@@ -12,9 +12,19 @@ public class DogMovement : MonoBehaviour
 
     void Update()
     {
-        if (target != null)
+        if (target == null) return;
+
+        // Двигаемся по полу (игнорируем Y)
+        Vector3 targetPos = new Vector3(target.position.x, transform.position.y, target.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+
+        // Поворачиваемся в сторону цели
+        Vector3 direction = targetPos - transform.position;
+        direction.y = 0;
+        if (direction != Vector3.zero)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         }
     }
 }

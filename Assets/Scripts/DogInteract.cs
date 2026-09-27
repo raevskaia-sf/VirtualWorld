@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class DogInteract : InteractPrompt
 {
@@ -10,10 +8,23 @@ public class DogInteract : InteractPrompt
 
     protected override void Interact()
     {
+        // 1. Показать "Гав!"
         if (barkUI != null)
         {
             barkUI.SetActive(true);
             barkTimer = barkDuration;
+        }
+
+        // 2. Показать диалог с кнопками
+        if (DogDialog.Instance != null)
+        {
+            DogDialog.Instance.ShowDialog();
+        }
+
+        // 3. Отметить задание "Поговорить с собакой"
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.CompleteQuest("dogTalk");
         }
     }
 

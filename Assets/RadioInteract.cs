@@ -15,8 +15,14 @@ public class RadioInteract : InteractPrompt
     {
         isPlaying = !isPlaying;
         if (isPlaying)
+        {
             audioSource.Play();
+            if (QuestManager.Instance != null)
+                QuestManager.Instance.CompleteQuest("radioOn");
+        }
         else
+        {
             audioSource.Pause();
+        }
     }
 }

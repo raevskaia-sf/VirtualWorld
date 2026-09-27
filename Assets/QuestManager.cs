@@ -10,30 +10,31 @@ public class QuestManager : MonoBehaviour
     private bool dogFed = false;
     private bool radioOn = false;
 
-    void Awake()
-    {
-        Instance = this;
-    }
-
-    void Start()
-    {
-        UpdateQuestText();
-    }
+    void Awake() { Instance = this; }
+    void Start() { UpdateQuestText(); }
 
     public void CompleteQuest(string questName)
     {
         if (questName == "dogTalk") dogTalked = true;
-        if (questName == "dogFeed") dogFed = true;
+        if (questName == "dogFed") dogFed = true;
         if (questName == "radioOn") radioOn = true;
         UpdateQuestText();
     }
 
     void UpdateQuestText()
     {
-        string text = "Задания:\n";
-        text += (dogTalked ? "✅" : "⬜") + " Поговорить с собакой\n";
-        text += (dogFed ? "✅" : "⬜") + " Покормить собаку\n";
-        text += (radioOn ? "✅" : "⬜") + " Включить радио";
+        string text = "<b>ЗАДАНИЯ:</b>\n";
+        text += FormatQuest("Поговорить с собакой", dogTalked);
+        text += FormatQuest("Покормить собаку", dogFed);
+        text += FormatQuest("Включить радио", radioOn);
         questText.text = text;
+    }
+
+    string FormatQuest(string questName, bool completed)
+    {
+        if (completed)
+            return "<s>[X] " + questName + "</s>\n";
+        else
+            return "[ ] " + questName + "\n";
     }
 }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class DogDialog : MonoBehaviour
 {
@@ -8,7 +7,6 @@ public class DogDialog : MonoBehaviour
     public GameObject dialogPanel;
     public Button fuButton;
     public Button feedButton;
-    public GameObject dogFood;
 
     void Awake() { Instance = this; }
 
@@ -19,25 +17,38 @@ public class DogDialog : MonoBehaviour
         feedButton.onClick.AddListener(OnFeed);
     }
 
+    void Update()
+    {
+        if (!dialogPanel.activeSelf) return;
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnFu();
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            OnFeed();
+        }
+    }
+
     public void ShowDialog()
     {
         dialogPanel.SetActive(true);
     }
 
-    void OnFu()
+    public void OnFu()
     {
         dialogPanel.SetActive(false);
         DogMovement dog = FindObjectOfType<DogMovement>();
         if (dog != null) dog.RunAway();
-        QuestManager.Instance.CompleteQuest("dogFed");
+        // Задание "Покормить" НЕ засчитывается
     }
 
-    void OnFeed()
+    public void OnFeed()
     {
         dialogPanel.SetActive(false);
-        if (dogFood != null) dogFood.SetActive(true);
         DogMovement dog = FindObjectOfType<DogMovement>();
         if (dog != null) dog.GoToBowl();
-        QuestManager.Instance.CompleteQuest("dogFed");
+        // Задание "Покормить" НЕ засчитывается — ждём наполнения миски
     }
 }
